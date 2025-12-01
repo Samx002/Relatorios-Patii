@@ -253,7 +253,7 @@
   <!-- Hero -->
   <section class="hero">
     <h1>Relatórios Patricinha</h1>
-    <p>Compare Outubro e Novembro com métricas em tempo real e visualização interativa.</p>
+    <p>Compare Outubro e Novembro com métricas e visualização interativa.</p>
     <a href="#reports" class="btn-neon">Ver Relatórios</a>
   </section>
 
@@ -277,16 +277,16 @@
     <p class="mt-1">"Brasileiro também vende barato!"</p>
   </footer>
 
-  <!-- ====== DADOS EDITÁVEIS (SUBSTITUA OS LINKS DE NOVEMBRO) ====== -->
+  <!-- ====== DADOS + SCRIPT CORRIGIDO ====== -->
   <script>
     const relatorios = {
       outubro: {
         metricas: [
-          { label: "Faturado s/ Frete", valor: "R$ 58.450,60"},
-          { label: "Reembolsado", valor: "R$ 1.780,00"},
-          { label: "Valor Final", valor: "R$ 69.426,45"},
-          { label: "Betalabs", valor: "R$ 1.382,10"},
-          { label: "Descontos", valor: "R$ 1.070,22",}
+          { label: "Faturado s/ Frete", valor: "R$ 58.450,60" },
+          { label: "Reembolsado", valor: "R$ 1.780,00" },
+          { label: "Valor Final", valor: "R$ 69.426,45" },
+          { label: "Betalabs", valor: "R$ 1.382,10" },
+          { label: "Descontos", valor: "R$ 1.070,22" }
         ],
         reports: [
           { titulo: "Fechamento Mensal do E-commerce", link: "https://app.powerbi.com/view?r=eyJrIjoiOGI4Y2Q4OGUtMGQ0Mi00MzcyLWIyNjMtMTdlNzc0Nzg2MDhmIiwidCI6IjA5MzljZGI2LWJhOWMtNGI4Mi04MGVlLTczMmZhZDk1MmUzZiJ9" },
@@ -300,7 +300,7 @@
           { label: "Reembolsado", valor: "R$ 936,89", comparacao: { texto: "Diminuição 47,37% vs Out", tipo: "up" } },
           { label: "Valor Final", valor: "R$ 56.228,67", comparacao: { texto: "Vendeu Menos 19,01% vs Out", tipo: "down" } },
           { label: "Betalabs", valor: "R$ 1.228,00", comparacao: { texto: "Vendeu Menos 11,15% vs Out", tipo: "up" } },
-          { label: "Descontos", valor: "R$ 788,59"}
+          { label: "Descontos", valor: "R$ 788,59" }
         ],
         reports: [
           { titulo: "Fechamento Mensal - Novembro 2025", link: "https://app.powerbi.com/view?r=eyJrIjoiYTNiMTJiZGMtYWEyNi00NzY5LWEzNzUtYzRkNDQyYWRlNjAwIiwidCI6IjVlZTJkNjNiLTgyYjMtNDc0MC04YjFiLTQ2MmRiNDhiYTEyOCJ9" },
@@ -317,11 +317,15 @@
       let html = `<div class="metrics-grid">`;
 
       data.metricas.forEach(m => {
+        const comparacaoHtml = m.comparacao 
+          ? `<div class="comparison ${m.comparacao.tipo}">${m.comparacao.texto}</div>`
+          : '';
+
         html += `
           <div class="metric-card">
             <div class="metric-label">${m.label}</div>
             <div class="metric-value">${m.valor}</div>
-            <div class="comparison ${m.comparacao.tipo}">${m.comparacao.texto}</div>
+            ${comparacaoHtml}
           </div>`;
       });
 
@@ -337,7 +341,7 @@
 
       contentDiv.innerHTML = html;
 
-      // Reaplicar animações GSAP
+      // Animações GSAP
       gsap.utils.toArray(".metric-card").forEach((card, i) => {
         gsap.from(card, {
           y: 50, opacity: 0, duration: 0.8, delay: i * 0.1, ease: "power2.out",
